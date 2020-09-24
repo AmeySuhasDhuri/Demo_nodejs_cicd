@@ -18,7 +18,7 @@ services:
     ports:
       - "80:8080"
     volumes:
-      - .:/home/node/app
+      - /home/amey/demo/node-project:/home/node/app
       - node_modules:/home/node/app/node_modules
     networks:
       - app-network
