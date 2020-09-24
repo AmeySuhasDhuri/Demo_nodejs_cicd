@@ -6,7 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     image: nodejs
-    container_name: nodejs1
+    container_name: nodejs
+    restart: unless-stopped
     env_file: .env
     environment:
       - MONGO_USERNAME=$MONGO_USERNAME
@@ -19,11 +20,9 @@ services:
     volumes:
       - .:/home/node/app
       - node_modules:/home/node/app/node_modules
-    depends_on:
-      - db
     networks:
       - app-network
-    command: db:27017 -- /home/node/app/node_modules/.bin/nodemon app.js 
+    command: ./wait-for.sh db:27017 -- /home/node/app/node_modules/.bin/nodemon app.js 
 
   db:
     image: mongo:4.1.8-xenial
